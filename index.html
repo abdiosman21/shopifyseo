@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Marquee · The SEO autopilot for Shopify</title>
+<title>Marquee. The SEO autopilot for Shopify.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
@@ -29,52 +29,82 @@
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-  body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif; font-size: 16px; line-height: 1.55; }
+  body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif; font-size: 16px; line-height: 1.55; overflow-x: hidden; }
   a { color: inherit; text-decoration: none; }
   .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+
+  /* Top live ticker */
+  .ticker { background: var(--ink); color: #fff; overflow: hidden; height: 34px; display: flex; align-items: center; }
+  .ticker-track { display: flex; gap: 0; white-space: nowrap; animation: scrollX 50s linear infinite; font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; }
+  .ticker-track > span { padding: 0 28px; display: inline-flex; align-items: center; gap: 12px; }
+  .ticker-track .sep { color: rgba(255,255,255,0.3); padding: 0; }
+  .live { display: inline-block; width: 7px; height: 7px; background: var(--pink); border-radius: 50%; animation: pulse 1.4s ease-in-out infinite; box-shadow: 0 0 8px var(--pink); }
+  @keyframes scrollX { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.65); } }
 
   /* Top nav */
   .nav { position: sticky; top: 0; background: rgba(255,255,255,0.85); backdrop-filter: saturate(180%) blur(14px); border-bottom: 1px solid var(--line); z-index: 50; }
   .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
   .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; letter-spacing: -0.01em; font-size: 17px; }
-  .logo-mark { width: 22px; height: 22px; border-radius: 6px; background: var(--grad-prism); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.3); }
+  .logo-mark { width: 22px; height: 22px; border-radius: 6px; background: var(--grad-prism); background-size: 200% 200%; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.3); animation: gradShift 6s ease-in-out infinite; }
+  @keyframes gradShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
   .nav-links { display: flex; gap: 28px; font-size: 14px; color: var(--ink-soft); }
+  .nav-links a { position: relative; padding: 4px 0; }
+  .nav-links a::after { content: ''; position: absolute; left: 0; right: 100%; bottom: 0; height: 1.5px; background: var(--grad-warm); transition: right 0.35s cubic-bezier(0.2,0.7,0.2,1); }
   .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover::after { right: 0; }
   .nav-cta { display: flex; gap: 10px; align-items: center; }
-  .btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 16px; border-radius: 999px; font-size: 14px; font-weight: 600; transition: transform .15s ease, background .15s ease; cursor: pointer; border: none; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 16px; border-radius: 999px; font-size: 14px; font-weight: 600; transition: transform .18s ease, box-shadow .18s ease, background .18s ease; cursor: pointer; border: none; }
   .btn-ghost { background: transparent; color: var(--ink); }
   .btn-ghost:hover { background: var(--line-soft); }
   .btn-dark { background: var(--ink); color: #fff; }
-  .btn-dark:hover { transform: translateY(-1px); }
-  .btn-grad { background: var(--grad-warm); color: #fff; box-shadow: 0 6px 18px rgba(255,79,110,0.28); }
-  .btn-grad:hover { transform: translateY(-1px); }
+  .btn-dark:hover { transform: translateY(-1px); box-shadow: 0 8px 20px -8px rgba(0,0,0,0.4); }
+  .btn-grad { background: var(--grad-warm); background-size: 200% 200%; color: #fff; box-shadow: 0 6px 18px rgba(255,79,110,0.28); animation: gradShift 5s ease-in-out infinite; }
+  .btn-grad:hover { transform: translateY(-1px); box-shadow: 0 12px 28px rgba(255,79,110,0.42); }
+  .btn-arrow { transition: transform .2s ease; display: inline-block; }
+  .btn:hover .btn-arrow { transform: translateX(3px); }
 
   /* Hero */
   .hero { padding: 64px 0 24px; position: relative; overflow: hidden; }
   .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 48px; align-items: center; }
-  .eyebrow { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--pink); margin-bottom: 18px; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--pink); margin-bottom: 18px; }
   .h-display { font-size: clamp(40px, 5.4vw, 68px); line-height: 1.02; letter-spacing: -0.025em; font-weight: 700; margin: 0 0 22px; }
-  .h-display em { font-style: normal; background: var(--grad-prism); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .h-display em { font-style: normal; background: var(--grad-prism); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: gradShift 6s ease-in-out infinite; }
   .h-sub { font-size: 19px; color: var(--ink-soft); max-width: 540px; margin: 0 0 28px; line-height: 1.5; }
-  .hero-ctas { display: flex; gap: 12px; align-items: center; }
+  .hero-ctas { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
   .hero-ctas .btn { padding: 14px 22px; font-size: 15px; }
-  .hero-meta { margin-top: 22px; font-size: 13px; color: var(--ink-faint); display: flex; gap: 18px; align-items: center; }
+  .hero-meta { margin-top: 22px; font-size: 13px; color: var(--ink-faint); display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
   .hero-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--ink-faint); }
 
-  /* Prismatic visual */
+  /* Prismatic visual w/ float */
   .prism { position: relative; width: 100%; aspect-ratio: 1 / 1; max-width: 460px; margin-left: auto; }
-  .prism::before { content: ''; position: absolute; inset: -10%; background: radial-gradient(circle at 60% 40%, rgba(255,79,110,0.18), transparent 60%), radial-gradient(circle at 30% 70%, rgba(124,92,255,0.18), transparent 55%); filter: blur(20px); }
+  .prism::before { content: ''; position: absolute; inset: -10%; background: radial-gradient(circle at 60% 40%, rgba(255,79,110,0.18), transparent 60%), radial-gradient(circle at 30% 70%, rgba(124,92,255,0.18), transparent 55%); filter: blur(20px); animation: glowPulse 8s ease-in-out infinite; }
+  @keyframes glowPulse { 0%, 100% { opacity: 0.7; transform: scale(1); } 50% { opacity: 1; transform: scale(1.08); } }
   .prism-stack { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; transform: rotate(-8deg); }
-  .blade { position: absolute; width: 60%; height: 60%; border-radius: 18px; box-shadow: 0 30px 60px -20px rgba(0,0,0,0.25), inset 0 0 0 1px rgba(255,255,255,0.35); }
-  .blade.b1 { background: linear-gradient(160deg, #ffd34d, #ff7a59 60%, #ff4f6e); transform: translate(-22%, 0) rotate(-4deg); }
-  .blade.b2 { background: linear-gradient(160deg, #ff7a59, #ff4f6e 60%, #d946a8); transform: translate(-8%, 4%) rotate(2deg); }
-  .blade.b3 { background: linear-gradient(160deg, #ff4f6e, #d946a8 60%, #7c5cff); transform: translate(8%, 8%) rotate(8deg); }
-  .blade.b4 { background: linear-gradient(160deg, #d946a8, #7c5cff 60%, #4cc4ff); transform: translate(22%, 12%) rotate(14deg); }
+  .blade { position: absolute; width: 60%; height: 60%; border-radius: 18px; box-shadow: 0 30px 60px -20px rgba(0,0,0,0.25), inset 0 0 0 1px rgba(255,255,255,0.35); will-change: transform; }
+  .blade.b1 { background: linear-gradient(160deg, #ffd34d, #ff7a59 60%, #ff4f6e); transform: translate(-22%, 0) rotate(-4deg); animation: float1 7s ease-in-out infinite; }
+  .blade.b2 { background: linear-gradient(160deg, #ff7a59, #ff4f6e 60%, #d946a8); transform: translate(-8%, 4%) rotate(2deg); animation: float2 8s ease-in-out infinite; }
+  .blade.b3 { background: linear-gradient(160deg, #ff4f6e, #d946a8 60%, #7c5cff); transform: translate(8%, 8%) rotate(8deg); animation: float3 9s ease-in-out infinite; }
+  .blade.b4 { background: linear-gradient(160deg, #d946a8, #7c5cff 60%, #4cc4ff); transform: translate(22%, 12%) rotate(14deg); animation: float4 10s ease-in-out infinite; }
+  @keyframes float1 { 0%,100% { transform: translate(-22%, 0) rotate(-4deg); } 50% { transform: translate(-26%, -3%) rotate(-7deg); } }
+  @keyframes float2 { 0%,100% { transform: translate(-8%, 4%) rotate(2deg); } 50% { transform: translate(-4%, 1%) rotate(5deg); } }
+  @keyframes float3 { 0%,100% { transform: translate(8%, 8%) rotate(8deg); } 50% { transform: translate(12%, 11%) rotate(11deg); } }
+  @keyframes float4 { 0%,100% { transform: translate(22%, 12%) rotate(14deg); } 50% { transform: translate(26%, 15%) rotate(18deg); } }
 
-  /* Logo strip */
-  .strip { padding: 28px 0 8px; }
-  .strip-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; opacity: 0.78; }
-  .strip-inner .ll { font-weight: 700; letter-spacing: -0.02em; color: var(--ink-faint); font-size: 18px; }
+  /* Sparkle particles in hero */
+  .sparkle { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--grad-warm); opacity: 0.6; animation: rise 6s ease-in-out infinite; pointer-events: none; }
+  .sparkle.s1 { left: 18%; top: 70%; animation-delay: 0s; }
+  .sparkle.s2 { left: 42%; top: 80%; background: var(--grad-cool); animation-delay: 1.4s; }
+  .sparkle.s3 { left: 68%; top: 75%; background: var(--cyan); animation-delay: 2.8s; }
+  .sparkle.s4 { left: 88%; top: 65%; background: var(--magenta); animation-delay: 4s; }
+  @keyframes rise { 0% { transform: translateY(0) scale(0.5); opacity: 0; } 20% { opacity: 0.7; } 100% { transform: translateY(-220px) scale(1.1); opacity: 0; } }
+
+  /* Logo strip - rotating marquee */
+  .strip { padding: 36px 0 14px; overflow: hidden; position: relative; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .strip-track { display: flex; gap: 0; white-space: nowrap; animation: scrollX 28s linear infinite; }
+  .strip-track > span { padding: 0 36px; display: inline-flex; align-items: center; gap: 36px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink-faint); font-size: 20px; }
+  .strip-track .star { width: 6px; height: 6px; border-radius: 50%; background: var(--grad-warm); }
+  .strip:hover .strip-track { animation-play-state: paused; }
 
   /* Section atoms */
   section { padding: 100px 0; }
@@ -84,16 +114,21 @@
   .section-sub { color: var(--ink-soft); font-size: 17px; margin: 0; }
 
   /* Throughput stats */
-  .stats { background: linear-gradient(180deg, #fff, #fff8f6); padding: 80px 0; border-block: 1px solid var(--line); }
-  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .stats { background: linear-gradient(180deg, #fff, #fff8f6); padding: 80px 0; border-block: 1px solid var(--line); position: relative; overflow: hidden; }
+  .stats::before { content: ''; position: absolute; left: -100px; top: 30%; width: 280px; height: 280px; border-radius: 50%; background: var(--grad-warm); filter: blur(120px); opacity: 0.18; animation: drift1 14s ease-in-out infinite; }
+  .stats::after { content: ''; position: absolute; right: -100px; bottom: 10%; width: 320px; height: 320px; border-radius: 50%; background: var(--grad-cool); filter: blur(120px); opacity: 0.16; animation: drift2 16s ease-in-out infinite; }
+  @keyframes drift1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(40px, -30px); } }
+  @keyframes drift2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-40px, 30px); } }
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; position: relative; }
   .stat { text-align: left; padding: 8px 4px; }
-  .stat-num { font-size: clamp(48px, 6vw, 72px); font-weight: 700; letter-spacing: -0.03em; line-height: 1; background: var(--grad-warm); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .stat-num { font-size: clamp(48px, 6vw, 72px); font-weight: 700; letter-spacing: -0.03em; line-height: 1; background: var(--grad-warm); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: gradShift 6s ease-in-out infinite; }
+  .stat-num .unit { font-size: 0.5em; }
   .stat-label { font-size: 14px; color: var(--ink-soft); margin-top: 12px; max-width: 280px; }
 
   /* Feature pillars */
   .pillars-intro { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: end; margin-bottom: 56px; }
   .pillars-intro h2 { font-size: clamp(34px, 4vw, 52px); letter-spacing: -0.025em; line-height: 1.04; margin: 0; font-weight: 700; }
-  .pillars-intro h2 em { font-style: normal; background: var(--grad-cool); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .pillars-intro h2 em { font-style: normal; background: var(--grad-cool); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: gradShift 6s ease-in-out infinite; }
   .pillars-intro p { color: var(--ink-soft); font-size: 17px; margin: 0; }
 
   .pillar { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding: 56px 0; border-top: 1px solid var(--line); }
@@ -105,10 +140,12 @@
   .pillar li { font-size: 15px; color: var(--ink); padding-left: 22px; position: relative; }
   .pillar li::before { content: ''; position: absolute; left: 0; top: 9px; width: 10px; height: 10px; border-radius: 50%; background: var(--grad-warm); }
   .pillar.right .pillar-visual { order: 2; }
-  .pillar-visual { position: relative; aspect-ratio: 4/3; border-radius: var(--r-lg); overflow: hidden; box-shadow: 0 30px 60px -30px rgba(0,0,0,0.18); border: 1px solid var(--line); background: #fff; }
+  .pillar-visual { position: relative; aspect-ratio: 4/3; border-radius: var(--r-lg); overflow: hidden; box-shadow: 0 30px 60px -30px rgba(0,0,0,0.18); border: 1px solid var(--line); background: #fff; transition: transform 0.5s ease, box-shadow 0.5s ease; }
+  .pillar:hover .pillar-visual { transform: translateY(-4px); box-shadow: 0 40px 80px -30px rgba(0,0,0,0.22); }
 
   .visual-card { padding: 24px; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
-  .v-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; margin-bottom: 8px; font-size: 13px; background: #fff; }
+  .v-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; margin-bottom: 8px; font-size: 13px; background: #fff; transition: transform 0.3s ease, border-color 0.3s ease; }
+  .pillar-visual:hover .v-row { border-color: rgba(255,79,110,0.25); }
   .v-row .left { display: flex; align-items: center; gap: 10px; color: var(--ink); }
   .v-row .swatch { width: 8px; height: 8px; border-radius: 50%; background: var(--pink); }
   .v-row .pill { font-size: 11px; padding: 3px 8px; border-radius: 999px; font-weight: 600; }
@@ -121,45 +158,56 @@
   .v-bar-row:last-child { margin-bottom: 0; }
   .v-bar-row .lab { width: 80px; }
   .v-bar { flex: 1; height: 8px; border-radius: 999px; background: var(--line-soft); overflow: hidden; }
-  .v-bar > i { display: block; height: 100%; background: var(--grad-warm); }
+  .v-bar > i { display: block; height: 100%; background: var(--grad-warm); width: 0; transition: width 1.6s cubic-bezier(0.2,0.7,0.2,1); }
+  .in .v-bar > i { width: var(--w, 0); }
   .v-num { width: 36px; text-align: right; color: var(--ink); font-weight: 600; }
 
   /* Comparison */
-  .compare-wrap { background: linear-gradient(180deg, #faf7ff, #fff); border-block: 1px solid var(--line); }
-  .compare { background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; box-shadow: 0 24px 60px -30px rgba(0,0,0,0.12); }
+  .compare-wrap { background: linear-gradient(180deg, #faf7ff, #fff); border-block: 1px solid var(--line); position: relative; overflow: hidden; }
+  .compare-wrap::before { content: ''; position: absolute; right: -120px; top: 20%; width: 360px; height: 360px; border-radius: 50%; background: var(--grad-cool); filter: blur(140px); opacity: 0.14; animation: drift1 18s ease-in-out infinite; }
+  .compare { background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; box-shadow: 0 24px 60px -30px rgba(0,0,0,0.12); position: relative; }
   .compare-head { display: grid; grid-template-columns: 1.2fr 1fr 1fr; }
   .compare-head > div { padding: 28px 24px; }
   .compare-head .col-label { font-size: 13px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-faint); }
   .compare-head .col-name { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin-top: 4px; }
   .compare-head .agency { background: var(--line-soft); border-left: 1px solid var(--line); }
-  .compare-head .ours { background: var(--ink); color: #fff; }
+  .compare-head .ours { background: var(--ink); color: #fff; position: relative; }
+  .compare-head .ours::after { content: ''; position: absolute; top: 18px; right: 18px; width: 8px; height: 8px; border-radius: 50%; background: var(--pink); animation: pulse 1.4s ease-in-out infinite; box-shadow: 0 0 12px var(--pink); }
   .compare-head .ours .col-label { color: rgba(255,255,255,0.65); }
-  .compare-head .ours .col-name { background: var(--grad-warm); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .compare-head .ours .col-name { background: var(--grad-warm); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: gradShift 6s ease-in-out infinite; }
 
-  .compare-row { display: grid; grid-template-columns: 1.2fr 1fr 1fr; border-top: 1px solid var(--line); }
+  .compare-row { display: grid; grid-template-columns: 1.2fr 1fr 1fr; border-top: 1px solid var(--line); transition: background 0.25s ease; }
+  .compare-row:hover { background: rgba(255,79,110,0.03); }
   .compare-row > div { padding: 18px 24px; font-size: 15px; display: flex; align-items: center; }
   .compare-row .feat { font-weight: 600; color: var(--ink); }
   .compare-row .agency { background: #fafafa; color: var(--ink-soft); border-left: 1px solid var(--line); }
   .compare-row .ours { color: var(--ink); font-weight: 500; }
-  .compare-row .ours::before { content: ''; display: inline-block; width: 16px; height: 16px; margin-right: 10px; flex-shrink: 0; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><circle cx='8' cy='8' r='8' fill='%23ff4f6e'/><path d='M4.5 8.2l2.4 2.4 4.6-5' stroke='white' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>"); background-repeat: no-repeat; background-size: contain; }
+  .compare-row .ours::before { content: ''; display: inline-block; width: 16px; height: 16px; margin-right: 10px; flex-shrink: 0; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><circle cx='8' cy='8' r='8' fill='%23ff4f6e'/><path d='M4.5 8.2l2.4 2.4 4.6-5' stroke='white' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>"); background-repeat: no-repeat; background-size: contain; transition: transform 0.25s ease; }
+  .compare-row:hover .ours::before { transform: scale(1.2); }
   .compare-row .agency::before { content: ''; display: inline-block; width: 16px; height: 16px; margin-right: 10px; flex-shrink: 0; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><circle cx='8' cy='8' r='7.4' fill='none' stroke='%23c8c8cf' stroke-width='1.2'/><path d='M5 5l6 6M11 5l-6 6' stroke='%23c8c8cf' stroke-width='1.4' stroke-linecap='round'/></svg>"); background-repeat: no-repeat; background-size: contain; }
 
-  /* How it works pyramid */
-  .how { padding: 120px 0; background: linear-gradient(180deg, #fff, #f7f4ff); }
-  .pyramid { display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 40px auto 56px; max-width: 720px; }
-  .pyramid-step { width: 100%; text-align: center; padding: 18px 24px; border-radius: 12px; color: #fff; font-weight: 600; font-size: 15px; box-shadow: 0 12px 30px -16px rgba(0,0,0,0.2); }
-  .pyramid-step:nth-child(1) { width: 38%; background: linear-gradient(135deg, #ffd34d, #ff7a59); }
-  .pyramid-step:nth-child(2) { width: 56%; background: linear-gradient(135deg, #ff7a59, #ff4f6e); }
-  .pyramid-step:nth-child(3) { width: 74%; background: linear-gradient(135deg, #ff4f6e, #d946a8); }
-  .pyramid-step:nth-child(4) { width: 92%; background: linear-gradient(135deg, #d946a8, #7c5cff); }
-  .pyramid-step:nth-child(5) { width: 100%; background: linear-gradient(135deg, #7c5cff, #4cc4ff); }
-  .pyramid-cap { font-size: 13px; opacity: 0.85; font-weight: 500; display: block; margin-top: 4px; }
+  /* How it works - timeline (numbered, glowing dots) */
+  .how { padding: 120px 0; background: linear-gradient(180deg, #fff, #f7f4ff); position: relative; overflow: hidden; }
+  .how::before { content: ''; position: absolute; left: 10%; top: 30%; width: 320px; height: 320px; border-radius: 50%; background: var(--grad-cool); filter: blur(140px); opacity: 0.14; animation: drift2 20s ease-in-out infinite; }
+  .timeline { position: relative; padding-left: 80px; max-width: 980px; margin: 0 auto; }
+  .timeline::before { content: ''; position: absolute; left: 8px; top: 24px; bottom: 24px; width: 2px; background: linear-gradient(180deg, var(--pink), var(--violet) 50%, var(--cyan)); opacity: 0.25; }
+  .tl-step { padding: 36px 0; border-bottom: 1px dashed var(--line); position: relative; display: grid; grid-template-columns: 110px 1fr 1.1fr; column-gap: 40px; row-gap: 8px; align-items: start; transition: transform 0.4s ease; }
+  .tl-step:last-child { border-bottom: 0; }
+  .tl-step::before { content: ''; position: absolute; left: -77px; top: 56px; width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 2px solid var(--line); transition: background 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease, transform 0.4s ease; }
+  .tl-step.in::before, .tl-step:hover::before { background: var(--grad-warm); border-color: transparent; box-shadow: 0 0 0 4px #fff, 0 0 22px rgba(255,79,110,0.6); transform: scale(1.15); }
+  .tl-step:hover { transform: translateX(4px); }
+  .tl-num { font-family: 'Instrument Serif', serif; font-size: clamp(48px, 6vw, 80px); line-height: 1; font-style: italic; background: var(--grad-prism); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: gradShift 6s ease-in-out infinite; align-self: start; margin: 0; }
+  .tl-title { font-size: clamp(22px, 2.4vw, 30px); line-height: 1.2; letter-spacing: -0.015em; font-weight: 700; margin: 0; padding-top: 14px; }
+  .tl-cap { font-size: 15px; color: var(--ink-soft); margin: 0; line-height: 1.55; padding-top: 18px; }
 
   /* Pricing */
   .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .price-card { border: 1px solid var(--line); border-radius: var(--r-lg); padding: 32px; background: #fff; display: flex; flex-direction: column; }
-  .price-card.featured { background: var(--ink); color: #fff; border-color: var(--ink); position: relative; }
-  .price-card.featured .badge { position: absolute; top: -12px; left: 32px; background: var(--grad-warm); color: #fff; font-size: 11px; font-weight: 700; padding: 6px 12px; border-radius: 999px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .price-card { border: 1px solid var(--line); border-radius: var(--r-lg); padding: 32px; background: #fff; display: flex; flex-direction: column; transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease; }
+  .price-card:hover { transform: translateY(-6px); box-shadow: 0 30px 60px -30px rgba(0,0,0,0.22); border-color: rgba(255,79,110,0.3); }
+  .price-card.featured { background: var(--ink); color: #fff; border-color: var(--ink); position: relative; overflow: hidden; }
+  .price-card.featured::before { content: ''; position: absolute; right: -60px; top: -60px; width: 200px; height: 200px; border-radius: 50%; background: var(--grad-prism); filter: blur(60px); opacity: 0.6; animation: glowPulse 6s ease-in-out infinite; }
+  .price-card.featured > * { position: relative; }
+  .price-card.featured .badge { position: absolute; top: -12px; left: 32px; background: var(--grad-warm); background-size: 200% 200%; color: #fff; font-size: 11px; font-weight: 700; padding: 6px 12px; border-radius: 999px; letter-spacing: 0.05em; text-transform: uppercase; animation: gradShift 5s ease-in-out infinite; z-index: 2; }
   .price-card h4 { margin: 0 0 6px; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--pink); }
   .price-card.featured h4 { color: #ff9b85; }
   .price-card .for { font-size: 13px; color: var(--ink-faint); margin: 0 0 24px; }
@@ -176,18 +224,94 @@
   /* CTA banner */
   .cta-band { padding: 80px 0; }
   .cta-card { background: var(--ink); color: #fff; border-radius: var(--r-lg); padding: 56px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; position: relative; overflow: hidden; }
-  .cta-card::after { content: ''; position: absolute; right: -80px; top: -80px; width: 320px; height: 320px; border-radius: 50%; background: var(--grad-prism); filter: blur(40px); opacity: 0.45; }
+  .cta-card::after { content: ''; position: absolute; right: -80px; top: -80px; width: 320px; height: 320px; border-radius: 50%; background: var(--grad-prism); filter: blur(40px); opacity: 0.5; animation: orbDrift 14s ease-in-out infinite; }
+  @keyframes orbDrift { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(-40px, 30px) scale(1.15); } 66% { transform: translate(30px, -20px) scale(0.95); } }
   .cta-card h3 { font-size: clamp(28px, 3vw, 40px); margin: 0 0 12px; letter-spacing: -0.02em; line-height: 1.1; position: relative; }
   .cta-card p { color: rgba(255,255,255,0.72); margin: 0; font-size: 16px; position: relative; }
-  .cta-card .actions { display: flex; gap: 12px; justify-content: flex-end; position: relative; }
+  .cta-card .actions { display: flex; gap: 12px; justify-content: flex-end; position: relative; flex-wrap: wrap; }
 
   /* Wordmark */
-  .wordmark { padding: 60px 0 100px; text-align: center; }
-  .wordmark span { font-size: clamp(80px, 16vw, 220px); font-weight: 800; letter-spacing: -0.05em; background: var(--grad-prism); -webkit-background-clip: text; background-clip: text; color: transparent; line-height: 1; display: inline-block; }
+  .wordmark { padding: 60px 0 100px; text-align: center; overflow: hidden; }
+  .wordmark span { font-size: clamp(80px, 16vw, 220px); font-weight: 800; letter-spacing: -0.05em; background: var(--grad-prism); background-size: 300% 300%; -webkit-background-clip: text; background-clip: text; color: transparent; line-height: 1; display: inline-block; animation: gradFlow 10s ease-in-out infinite; }
+  @keyframes gradFlow { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
 
   /* Footer */
   footer { border-top: 1px solid var(--line); padding: 40px 0; color: var(--ink-faint); font-size: 13px; }
   .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  footer a { transition: color 0.2s ease; }
+  footer a:hover { color: var(--ink); }
+
+  /* Always-on manifesto (off-white, editorial — A Color Bright inspired) */
+  .always-on { padding: clamp(110px, 14vw, 180px) 0 clamp(110px, 14vw, 170px); background: #ede3cf; position: relative; overflow: hidden; }
+  .always-on::before { content: ''; position: absolute; left: -10%; top: 4%; width: 58%; height: 78%; background: radial-gradient(ellipse at 40% 50%, rgba(232, 138, 96, 0.55), rgba(232, 138, 96, 0) 62%); filter: blur(20px); pointer-events: none; animation: orbDrift 22s ease-in-out infinite; }
+  .always-on::after { content: ''; position: absolute; right: -12%; bottom: -2%; width: 60%; height: 75%; background: radial-gradient(ellipse at 60% 50%, rgba(214, 168, 196, 0.5), rgba(214, 168, 196, 0) 62%); filter: blur(28px); pointer-events: none; animation: orbDrift 26s ease-in-out infinite reverse; }
+  .ao-grain { position: absolute; inset: 0; pointer-events: none; opacity: 0.4; mix-blend-mode: multiply; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.18 0 0 0 0 0.13 0 0 0 0 0.08 0 0 0 0.32 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"); }
+  .ao-inner { position: relative; z-index: 2; text-align: center; max-width: 980px; margin: 0 auto; padding: 0 28px; }
+  .ao-rule-eyebrow { display: inline-flex; align-items: center; gap: 14px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.34em; text-transform: uppercase; color: #8a6a3f; margin-bottom: 38px; }
+  .ao-rule-eyebrow::before, .ao-rule-eyebrow::after { content: ''; display: inline-block; width: 28px; height: 1px; background: #8a6a3f; opacity: 0.5; }
+  .ao-display { font-family: 'Instrument Serif', 'Times New Roman', serif; font-weight: 400; font-size: clamp(52px, 8.4vw, 124px); letter-spacing: -0.022em; line-height: 0.94; color: #28201a; margin: 0 0 36px; }
+  .ao-display em { font-style: italic; color: #b35528; display: inline-block; }
+  .ao-lede { font-family: 'Inter', sans-serif; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.55; color: #6a5436; max-width: 660px; margin: 0 auto 88px; }
+  .ao-lede strong { color: #28201a; font-weight: 600; }
+
+  .ao-stats-row { display: grid; grid-template-columns: repeat(3, 1fr); max-width: 1040px; margin: 0 auto; text-align: left; position: relative; z-index: 2; border-top: 1px solid rgba(40, 32, 26, 0.18); }
+  .ao-stat-cell { padding: 44px 36px 8px; border-left: 1px solid rgba(40, 32, 26, 0.18); position: relative; transition: transform 0.5s cubic-bezier(0.2,0.7,0.2,1); }
+  .ao-stat-cell:first-child { border-left: 0; }
+  .ao-stat-cell:hover { transform: translateY(-6px); }
+  .ao-stat-num { font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic; font-size: clamp(80px, 9vw, 132px); letter-spacing: -0.04em; line-height: 0.86; color: #28201a; margin: 0 0 16px; display: flex; align-items: baseline; gap: 8px; }
+  .ao-stat-num em { font-style: normal; font-size: 0.26em; font-family: 'Inter', sans-serif; font-weight: 500; color: #8a6a3f; letter-spacing: 0.14em; text-transform: uppercase; line-height: 1; transform: translateY(-0.5em); }
+  .ao-stat-rule { width: 32px; height: 2px; background: #b35528; margin: 0 0 18px; transition: width 0.5s cubic-bezier(0.2,0.7,0.2,1); }
+  .ao-stat-cell:hover .ao-stat-rule { width: 64px; }
+  .ao-stat-cap { font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.55; color: #6a5436; }
+  .ao-stat-cap strong { color: #28201a; font-weight: 600; }
+
+  @media (max-width: 820px) {
+    .ao-stats-row { grid-template-columns: 1fr; }
+    .ao-stat-cell { border-left: 0; border-top: 1px solid rgba(40, 32, 26, 0.18); padding: 36px 0 12px; }
+    .ao-stats-row { border-top: 0; }
+  }
+
+  /* Sliding agents */
+  .agents { padding: 100px 0 80px; position: relative; overflow: hidden; }
+  .agents .section-head { margin-bottom: 48px; }
+  .agent-marquee { position: relative; mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
+  .agent-track { display: flex; gap: 18px; width: max-content; animation: scrollX 60s linear infinite; will-change: transform; padding: 12px 0; }
+  .agent-marquee:hover .agent-track { animation-play-state: paused; }
+  .agent-card { flex: 0 0 320px; border: 1px solid var(--line); border-radius: var(--r-lg); padding: 24px; background: #fff; display: flex; flex-direction: column; gap: 14px; transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease; position: relative; overflow: hidden; }
+  .agent-card::after { content: ''; position: absolute; right: -40px; top: -40px; width: 140px; height: 140px; border-radius: 50%; opacity: 0.08; filter: blur(30px); transition: opacity 0.4s ease; pointer-events: none; }
+  .agent-card:hover { transform: translateY(-6px); box-shadow: 0 30px 60px -30px rgba(0,0,0,0.2); border-color: rgba(255,79,110,0.3); }
+  .agent-card:hover::after { opacity: 0.22; }
+  .agent-card .agent-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #fff; box-shadow: 0 8px 20px -8px rgba(0,0,0,0.2); }
+  .agent-card.g1 .agent-icon, .agent-card.g1::after { background: linear-gradient(135deg, #ff4f6e, #ff7a59); }
+  .agent-card.g2 .agent-icon, .agent-card.g2::after { background: linear-gradient(135deg, #ff7a59, #ffb84c); }
+  .agent-card.g3 .agent-icon, .agent-card.g3::after { background: linear-gradient(135deg, #d946a8, #ff4f6e); }
+  .agent-card.g4 .agent-icon, .agent-card.g4::after { background: linear-gradient(135deg, #7c5cff, #d946a8); }
+  .agent-card.g5 .agent-icon, .agent-card.g5::after { background: linear-gradient(135deg, #4cc4ff, #7c5cff); }
+  .agent-card.g6 .agent-icon, .agent-card.g6::after { background: linear-gradient(135deg, #4cc4ff, #d946a8); }
+  .agent-card.g7 .agent-icon, .agent-card.g7::after { background: linear-gradient(135deg, #ffb84c, #ff4f6e); }
+  .agent-card.g8 .agent-icon, .agent-card.g8::after { background: linear-gradient(135deg, #7c5cff, #4cc4ff); }
+  .agent-name { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; margin: 0; position: relative; }
+  .agent-role { font-size: 13px; color: var(--ink-soft); margin: -8px 0 0; line-height: 1.5; position: relative; }
+  .agent-status { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--pink); position: relative; }
+  .agent-status .live { width: 6px; height: 6px; box-shadow: 0 0 8px var(--pink); }
+  .agent-task { font-size: 12px; color: var(--ink-faint); padding-top: 12px; border-top: 1px dashed var(--line); margin-top: auto; line-height: 1.45; position: relative; }
+
+  /* Reveal animation */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s cubic-bezier(0.2,0.7,0.2,1), transform 0.9s cubic-bezier(0.2,0.7,0.2,1); }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-track, .strip-track,
+    .blade, .prism::before, .stats::before, .stats::after, .compare-wrap::before, .how::before,
+    .price-card.featured::before, .cta-card::after, .always-on::before, .always-on::after,
+    .logo-mark, .btn-grad, .h-display em, .pillars-intro h2 em, .stat-num, .compare-head .ours .col-name, .tl-num, .wordmark span,
+    .compare-head .ours::after, .live, .sparkle {
+      animation: none !important;
+    }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .in .v-bar > i { transition: none; }
+  }
 
   /* Responsive */
   @media (max-width: 900px) {
@@ -203,10 +327,44 @@
     .cta-card { grid-template-columns: 1fr; padding: 32px; }
     .cta-card .actions { justify-content: flex-start; }
     .nav-links { display: none; }
+    .timeline { padding-left: 48px; }
+    .tl-step { grid-template-columns: 60px 1fr; gap: 16px; }
+    .tl-step::before { left: -45px; top: 48px; }
+    .tl-cap { grid-column: 1 / -1; padding-top: 6px; }
   }
 </style>
 </head>
 <body>
+
+<!-- Live ticker -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span><i class="live"></i> NOW SHIPPING <span class="sep">/</span> 47 PAGES OPTIMIZED THIS HOUR</span>
+    <span class="sep">●</span>
+    <span>+12 AI CITATIONS EARNED THIS WEEK</span>
+    <span class="sep">●</span>
+    <span><i class="live"></i> 8 AGENTS WORKING ACROSS 142 STORES</span>
+    <span class="sep">●</span>
+    <span>YOUR BUSINESS DOESN'T GO ON LEAVE <span class="sep">/</span> NEITHER DO WE</span>
+    <span class="sep">●</span>
+    <span>KEYWORD RESEARCH RETURNED IN 24 HOURS</span>
+    <span class="sep">●</span>
+    <span>ZERO MEETINGS BOOKED. EVER.</span>
+    <span class="sep">●</span>
+    <span><i class="live"></i> NOW SHIPPING <span class="sep">/</span> 47 PAGES OPTIMIZED THIS HOUR</span>
+    <span class="sep">●</span>
+    <span>+12 AI CITATIONS EARNED THIS WEEK</span>
+    <span class="sep">●</span>
+    <span><i class="live"></i> 8 AGENTS WORKING ACROSS 142 STORES</span>
+    <span class="sep">●</span>
+    <span>YOUR BUSINESS DOESN'T GO ON LEAVE <span class="sep">/</span> NEITHER DO WE</span>
+    <span class="sep">●</span>
+    <span>KEYWORD RESEARCH RETURNED IN 24 HOURS</span>
+    <span class="sep">●</span>
+    <span>ZERO MEETINGS BOOKED. EVER.</span>
+    <span class="sep">●</span>
+  </div>
+</div>
 
 <header class="nav">
   <div class="wrap nav-inner">
@@ -226,14 +384,18 @@
 
 <!-- HERO -->
 <section class="hero">
+  <span class="sparkle s1"></span>
+  <span class="sparkle s2"></span>
+  <span class="sparkle s3"></span>
+  <span class="sparkle s4"></span>
   <div class="wrap hero-grid">
     <div>
-      <span class="eyebrow">SEO + AEO Autopilot for Shopify</span>
+      <span class="eyebrow"><i class="live"></i> SEO + AEO Autopilot for Shopify</span>
       <h1 class="h-display">Stop paying agencies for <em>slide decks.</em> Pay half the price for traffic.</h1>
-      <p class="h-sub">Marquee runs your entire organic growth function. Technical SEO, content, AI search optimization, authority building. All run by 5 AI agents that ship 50 hours of work per week. No meetings. No account managers. Every change sent to you for approval before going live.</p>
+      <p class="h-sub">Marquee runs your entire organic growth function. Technical SEO, content, AI search optimization, authority building. All run by 8 specialised AI agents that ship 50 hours of work per week. No meetings. No account managers on leave. Every change sent to you for approval before going live.</p>
       <div class="hero-ctas">
-        <a class="btn btn-grad" href="#pricing">Start free audit</a>
-        <a class="btn btn-ghost" href="#how">See how it works →</a>
+        <a class="btn btn-grad" href="#pricing">Start free audit <span class="btn-arrow">→</span></a>
+        <a class="btn btn-ghost" href="#how">See how it works <span class="btn-arrow">→</span></a>
       </div>
       <div class="hero-meta">
         <span>Connects to Shopify, Search Console, and Analytics in 10 minutes</span>
@@ -254,40 +416,192 @@
   </div>
 </section>
 
-<!-- LOGO STRIP -->
-<div class="strip wrap">
-  <div class="strip-inner">
-    <span class="ll">SHOPIFY</span>
-    <span class="ll">SEARCH CONSOLE</span>
-    <span class="ll">ANALYTICS</span>
-    <span class="ll">AHREFS</span>
-    <span class="ll">SEMRUSH</span>
-    <span class="ll">PERPLEXITY</span>
-    <span class="ll">CHATGPT</span>
-    <span class="ll">GEMINI</span>
+<!-- ROTATING LOGO STRIP -->
+<div class="strip" aria-hidden="true">
+  <div class="strip-track">
+    <span>SHOPIFY <span class="star"></span> SEARCH CONSOLE <span class="star"></span> ANALYTICS <span class="star"></span> AHREFS <span class="star"></span> SEMRUSH <span class="star"></span> PERPLEXITY <span class="star"></span> CHATGPT <span class="star"></span> GEMINI <span class="star"></span> CLAUDE <span class="star"></span> LOOKER <span class="star"></span> POWER BI <span class="star"></span></span>
+    <span>SHOPIFY <span class="star"></span> SEARCH CONSOLE <span class="star"></span> ANALYTICS <span class="star"></span> AHREFS <span class="star"></span> SEMRUSH <span class="star"></span> PERPLEXITY <span class="star"></span> CHATGPT <span class="star"></span> GEMINI <span class="star"></span> CLAUDE <span class="star"></span> LOOKER <span class="star"></span> POWER BI <span class="star"></span></span>
   </div>
 </div>
 
 <!-- THROUGHPUT STATS -->
 <section class="stats">
   <div class="wrap">
-    <div class="section-head" style="margin-bottom: 40px;">
+    <div class="section-head reveal" style="margin-bottom: 40px;">
       <div class="section-eyebrow">The throughput difference</div>
       <h2 class="section-title">A typical agency does 10 hours of SEO per week.<br/>We do 50.</h2>
-      <p class="section-sub">Five AI agents working around the clock on your store. Same outcomes as a top-tier agency. 5x the work shipped. Half the cost.</p>
+      <p class="section-sub">Eight specialised AI agents working around the clock on your store. Same outcomes as a top-tier agency. 5x the work shipped. Half the cost.</p>
     </div>
     <div class="stats-grid">
-      <div class="stat">
-        <div class="stat-num">50<span style="font-size:0.5em">hrs</span></div>
+      <div class="stat reveal">
+        <div class="stat-num"><span class="counter" data-target="50">0</span><span class="unit">hrs</span></div>
         <div class="stat-label">Of SEO work shipped to your store every single week, automatically.</div>
       </div>
-      <div class="stat">
-        <div class="stat-num">5x</div>
+      <div class="stat reveal">
+        <div class="stat-num"><span class="counter" data-target="5">0</span><span class="unit">x</span></div>
         <div class="stat-label">More pages optimized, content shipped, and citations earned than a typical Shopify SEO agency.</div>
       </div>
-      <div class="stat">
-        <div class="stat-num">0</div>
+      <div class="stat reveal">
+        <div class="stat-num"><span class="counter" data-target="0">0</span></div>
         <div class="stat-label">Meetings, kickoff calls, status decks, or account managers between you and the work.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ALWAYS-ON MANIFESTO (off-white, editorial) -->
+<section class="always-on">
+  <div class="ao-grain" aria-hidden="true"></div>
+  <div class="ao-inner reveal">
+    <div class="ao-rule-eyebrow">365 / 365 — Always shipping</div>
+    <h2 class="ao-display">Your business doesn't<br/>go on leave. <em>Neither&nbsp;do&nbsp;we.</em></h2>
+    <p class="ao-lede">No PTO. No sick days. No "your account manager is back next Tuesday." Marquee ships your growth function <strong>365 days a year</strong>. Same agents every week. No handoffs. No rework. Keyword research returned in 24 hours, not queued behind another client.</p>
+  </div>
+  <div class="wrap">
+    <div class="ao-stats-row reveal">
+      <div class="ao-stat-cell">
+        <div class="ao-stat-num"><span class="counter" data-target="24">0</span><em>hrs</em></div>
+        <div class="ao-stat-rule"></div>
+        <div class="ao-stat-cap"><strong>Keyword research turnaround.</strong> Full SERP analysis, intent mapping, and cluster recommendations. Not next sprint. Tomorrow.</div>
+      </div>
+      <div class="ao-stat-cell">
+        <div class="ao-stat-num"><span class="counter" data-target="365">0</span><em>days</em></div>
+        <div class="ao-stat-rule"></div>
+        <div class="ao-stat-cap"><strong>Days a year of agents shipping</strong> work to your store. Including weekends, public holidays, and the week your old agency goes silent.</div>
+      </div>
+      <div class="ao-stat-cell">
+        <div class="ao-stat-num"><span class="counter" data-target="0">0</span></div>
+        <div class="ao-stat-rule"></div>
+        <div class="ao-stat-cap"><strong>Handoffs.</strong> No junior taking over while a senior is on leave. Same agents, same context, every single week.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENTS SLIDING COMPONENT -->
+<section class="agents">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">Meet the agents</div>
+      <h2 class="section-title">Eight specialised agents. One system. Always on.</h2>
+      <p class="section-sub">Each agent owns a discipline. They share the same context, the same data, and the same mandate: ship the work that drives organic growth, every single week.</p>
+    </div>
+  </div>
+  <div class="agent-marquee" aria-hidden="true">
+    <div class="agent-track">
+      <!-- Set 1 -->
+      <div class="agent-card g1">
+        <div class="agent-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></div>
+        <span class="agent-status"><i class="live"></i> Live</span>
+        <h4 class="agent-name">Research Agent</h4>
+        <p class="agent-role">Keyword and SERP intelligence. Cluster mapping. 24h turnaround on every research brief.</p>
+        <div class="agent-task">Now: pulling SERP analysis for /collections/serums · 142 queries</div>
+      </div>
+      <div class="agent-card g2">
+        <div class="agent-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12H4z"/><path d="M16 4v4h4"/><path d="M8 13h8M8 17h6"/></svg></div>
+        <span class="agent-status"><i class="live"></i> Drafting</span>
+        <h4 class="agent-name">Content Agent</h4>
+        <p class="agent-role">Pillar pages and supporting posts in topic clusters. Brand voice tuned. Built for AEO and humans.</p>
+        <div class="agent-task">Now: 4 supporting posts queued in vitamin C cluster</div>
+      </div>
+      <div class="agent-card g3">
+        <div class="agent-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/><circle cx="12" cy="12" r="4"/></svg></div>
+        <span class="agent-status"><i class="live"></i> Patching</span>
+        <h4 class="agent-name">Technical Agent</h4>
+        <p class="agent-role">Schema markup, internal links, redirects, Core Web Vitals, faceted nav, sitemap hygiene.</p>
+        <div class="agent-task">Now: deploying Product schema to 14 product pages</div>
+      </div>
+      <div class="agent-card g4">
+        <div class="agent-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l3 6 6 .9-4.5 4.4 1 6.7L12 17.8 6.5 21l1-6.7L3 9.9l6-.9z"/></svg></div>
+        <span class="agent-status"><i class="live"></i> Tracking</span>
+        <h4 class="agent-name">AEO Agent</h4>
+        <p class="agent-role">Citation hunting across ChatGPT, Claude, Gemini, Perplexity, AI Overviews. Answer formatting at scale.</p>
+        <div class="agent-task">Now: monitoring 47 queries across 5 LLM surfaces</div>
+      </div>
+      <div class="agent-card g5">
+        <div class="agent-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-7-7 18-2-8z"/></svg></div>
+        <span class="agent-status"><i class="live"></i> Pitching</span>
+        <h4 class="agent-name">Outreach Agent</h4>
+        <p class="agent-role">Editorial placements, Wikipedia citations, digital PR pitches to high-authority publishers.</p>
+        <div class="agent-task">Now: 3 publisher pitches in flight for Q2 listicles</div>
+      </div>
+      <div class="agent-card g6">
+        <div class="agent-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></div>
+        <span class="agent-status"><i class="live"></i> Logging</span>
+        <h4 class="agent-name">Competitor Agent</h4>
+        <p class="agent-role">Tracks rank shifts, content drops, citation moves, and link wins for every competitor you flag.</p>
+        <div class="agent-task">Now: 12 new posts logged from 3 competitors today</div>
+      </div>
+      <div class="agent-card g7">
+        <div class="agent-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 17V11M12 17V7M17 17v-4"/></svg></div>
+        <span class="agent-status"><i class="live"></i> Refreshing</span>
+        <h4 class="agent-name">Analytics Agent</h4>
+        <p class="agent-role">Revenue attribution from GA4. Cluster-level performance reporting. Weekly board-ready dashboards.</p>
+        <div class="agent-task">Now: rebuilding Looker views for vitamin C cluster</div>
+      </div>
+      <div class="agent-card g8">
+        <div class="agent-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V6a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg></div>
+        <span class="agent-status"><i class="live"></i> Tuning</span>
+        <h4 class="agent-name">Brand Voice Agent</h4>
+        <p class="agent-role">Trains on founder interviews, reviews, and shipped content so every word sounds like you, not us.</p>
+        <div class="agent-task">Now: re-tuning voice profile from Q1 founder podcast</div>
+      </div>
+      <!-- Set 2 (duplicate for seamless scroll) -->
+      <div class="agent-card g1">
+        <div class="agent-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></div>
+        <span class="agent-status"><i class="live"></i> Live</span>
+        <h4 class="agent-name">Research Agent</h4>
+        <p class="agent-role">Keyword and SERP intelligence. Cluster mapping. 24h turnaround on every research brief.</p>
+        <div class="agent-task">Now: pulling SERP analysis for /collections/serums · 142 queries</div>
+      </div>
+      <div class="agent-card g2">
+        <div class="agent-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12H4z"/><path d="M16 4v4h4"/><path d="M8 13h8M8 17h6"/></svg></div>
+        <span class="agent-status"><i class="live"></i> Drafting</span>
+        <h4 class="agent-name">Content Agent</h4>
+        <p class="agent-role">Pillar pages and supporting posts in topic clusters. Brand voice tuned. Built for AEO and humans.</p>
+        <div class="agent-task">Now: 4 supporting posts queued in vitamin C cluster</div>
+      </div>
+      <div class="agent-card g3">
+        <div class="agent-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/><circle cx="12" cy="12" r="4"/></svg></div>
+        <span class="agent-status"><i class="live"></i> Patching</span>
+        <h4 class="agent-name">Technical Agent</h4>
+        <p class="agent-role">Schema markup, internal links, redirects, Core Web Vitals, faceted nav, sitemap hygiene.</p>
+        <div class="agent-task">Now: deploying Product schema to 14 product pages</div>
+      </div>
+      <div class="agent-card g4">
+        <div class="agent-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l3 6 6 .9-4.5 4.4 1 6.7L12 17.8 6.5 21l1-6.7L3 9.9l6-.9z"/></svg></div>
+        <span class="agent-status"><i class="live"></i> Tracking</span>
+        <h4 class="agent-name">AEO Agent</h4>
+        <p class="agent-role">Citation hunting across ChatGPT, Claude, Gemini, Perplexity, AI Overviews. Answer formatting at scale.</p>
+        <div class="agent-task">Now: monitoring 47 queries across 5 LLM surfaces</div>
+      </div>
+      <div class="agent-card g5">
+        <div class="agent-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-7-7 18-2-8z"/></svg></div>
+        <span class="agent-status"><i class="live"></i> Pitching</span>
+        <h4 class="agent-name">Outreach Agent</h4>
+        <p class="agent-role">Editorial placements, Wikipedia citations, digital PR pitches to high-authority publishers.</p>
+        <div class="agent-task">Now: 3 publisher pitches in flight for Q2 listicles</div>
+      </div>
+      <div class="agent-card g6">
+        <div class="agent-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></div>
+        <span class="agent-status"><i class="live"></i> Logging</span>
+        <h4 class="agent-name">Competitor Agent</h4>
+        <p class="agent-role">Tracks rank shifts, content drops, citation moves, and link wins for every competitor you flag.</p>
+        <div class="agent-task">Now: 12 new posts logged from 3 competitors today</div>
+      </div>
+      <div class="agent-card g7">
+        <div class="agent-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 17V11M12 17V7M17 17v-4"/></svg></div>
+        <span class="agent-status"><i class="live"></i> Refreshing</span>
+        <h4 class="agent-name">Analytics Agent</h4>
+        <p class="agent-role">Revenue attribution from GA4. Cluster-level performance reporting. Weekly board-ready dashboards.</p>
+        <div class="agent-task">Now: rebuilding Looker views for vitamin C cluster</div>
+      </div>
+      <div class="agent-card g8">
+        <div class="agent-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V6a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg></div>
+        <span class="agent-status"><i class="live"></i> Tuning</span>
+        <h4 class="agent-name">Brand Voice Agent</h4>
+        <p class="agent-role">Trains on founder interviews, reviews, and shipped content so every word sounds like you, not us.</p>
+        <div class="agent-task">Now: re-tuning voice profile from Q1 founder podcast</div>
       </div>
     </div>
   </div>
@@ -296,13 +610,13 @@
 <!-- PILLARS INTRO -->
 <section>
   <div class="wrap">
-    <div class="pillars-intro">
+    <div class="pillars-intro reveal">
       <h2>Your <em>entire</em> organic growth function, automated end to end.</h2>
       <p>Marquee combines five channels of work that brands normally piece together from agencies, freelancers, and tools. We run them as one system, on your store, every week.</p>
     </div>
 
     <!-- PILLAR 1 -->
-    <div class="pillar">
+    <div class="pillar reveal">
       <div>
         <span class="tag">On-page autopilot</span>
         <h3>Technical SEO and on-page optimization, shipped continuously.</h3>
@@ -330,13 +644,13 @@
     </div>
 
     <!-- PILLAR 2 -->
-    <div class="pillar right">
+    <div class="pillar right reveal">
       <div class="pillar-visual">
         <div class="visual-card">
           <div class="v-bar-wrap">
-            <div class="v-bar-row"><span class="lab">Marquee</span><div class="v-bar"><i style="width:92%"></i></div><span class="v-num">12</span></div>
-            <div class="v-bar-row"><span class="lab">Competitor A</span><div class="v-bar"><i style="width:38%; background:linear-gradient(90deg,#c8c8cf,#a8a8b0)"></i></div><span class="v-num">5</span></div>
-            <div class="v-bar-row"><span class="lab">Competitor B</span><div class="v-bar"><i style="width:62%; background:linear-gradient(90deg,#a8a8b0,#7c5cff)"></i></div><span class="v-num">8</span></div>
+            <div class="v-bar-row"><span class="lab">Marquee</span><div class="v-bar"><i style="--w:92%"></i></div><span class="v-num">12</span></div>
+            <div class="v-bar-row"><span class="lab">Competitor A</span><div class="v-bar"><i style="--w:38%; background:linear-gradient(90deg,#c8c8cf,#a8a8b0)"></i></div><span class="v-num">5</span></div>
+            <div class="v-bar-row"><span class="lab">Competitor B</span><div class="v-bar"><i style="--w:62%; background:linear-gradient(90deg,#a8a8b0,#7c5cff)"></i></div><span class="v-num">8</span></div>
             <div style="font-size:11px;color:var(--ink-faint);margin-top:10px;">Posts shipped this month, by competitor</div>
           </div>
         </div>
@@ -346,18 +660,19 @@
         <h3>Deep content research and topic clusters built around your core categories.</h3>
         <p>We map every category you sell into a full topic cluster: pillar pages, supporting articles, comparison content, and answer pages, all interlinked. You don't just rank for a few keywords. You become the topical authority for the categories you compete in.</p>
         <ul>
-          <li>Full content research: SERP gaps, competitor coverage, intent mapping, AI citation patterns</li>
+          <li><strong>Keyword research returned within 24 hours.</strong> Full SERP analysis, intent mapping, and cluster recommendations. Not a 1-2 week queue.</li>
           <li>Topic clusters: pillar + 6 to 12 supporting posts per core category, fully interlinked</li>
           <li>Brand voice trained on your existing content and founder interviews</li>
           <li>Grounded in your reviews, product data, and FAQ to add real substance</li>
           <li>Every draft sent to you for approval before publishing. One click to ship.</li>
           <li>Auto-published to Shopify after approval, with internal links, schema, and AEO formatting</li>
+          <li><strong>Monthly content cluster performance reports:</strong> traffic, rankings, conversions, AI citations, and revenue attributed by topic cluster and content category. You see exactly which clusters and categories are compounding.</li>
         </ul>
       </div>
     </div>
 
     <!-- PILLAR 3 -->
-    <div class="pillar">
+    <div class="pillar reveal">
       <div>
         <span class="tag">AEO + GEO</span>
         <h3>Get cited in ChatGPT, Perplexity, Claude, Gemini, and Google AI Overviews.</h3>
@@ -384,7 +699,7 @@
     </div>
 
     <!-- PILLAR 4 -->
-    <div class="pillar right">
+    <div class="pillar right reveal">
       <div class="pillar-visual">
         <div class="visual-card">
           <div>
@@ -410,7 +725,7 @@
     </div>
 
     <!-- PILLAR 5 -->
-    <div class="pillar">
+    <div class="pillar reveal">
       <div>
         <span class="tag">Dashboards, rankings + competitor reports</span>
         <h3>Live dashboards in Looker or Power BI. Plus a weekly competitor report on every brand you compete with.</h3>
@@ -432,10 +747,10 @@
             <div style="font-size:11px;color:var(--ink-faint);">Refreshed: today</div>
           </div>
           <div class="v-bar-wrap" style="margin-bottom:12px;">
-            <div class="v-bar-row"><span class="lab" style="width:120px;">vitamin c serum</span><div class="v-bar"><i style="width:88%"></i></div><span class="v-num">#2</span></div>
-            <div class="v-bar-row"><span class="lab" style="width:120px;">retinol cream</span><div class="v-bar"><i style="width:72%"></i></div><span class="v-num">#4</span></div>
-            <div class="v-bar-row"><span class="lab" style="width:120px;">peptide moisturiser</span><div class="v-bar"><i style="width:60%"></i></div><span class="v-num">#6</span></div>
-            <div class="v-bar-row"><span class="lab" style="width:120px;">spf 50 sunscreen</span><div class="v-bar"><i style="width:46%"></i></div><span class="v-num">#9</span></div>
+            <div class="v-bar-row"><span class="lab" style="width:120px;">vitamin c serum</span><div class="v-bar"><i style="--w:88%"></i></div><span class="v-num">#2</span></div>
+            <div class="v-bar-row"><span class="lab" style="width:120px;">retinol cream</span><div class="v-bar"><i style="--w:72%"></i></div><span class="v-num">#4</span></div>
+            <div class="v-bar-row"><span class="lab" style="width:120px;">peptide moisturiser</span><div class="v-bar"><i style="--w:60%"></i></div><span class="v-num">#6</span></div>
+            <div class="v-bar-row"><span class="lab" style="width:120px;">spf 50 sunscreen</span><div class="v-bar"><i style="--w:46%"></i></div><span class="v-num">#9</span></div>
           </div>
           <div style="display:flex;gap:8px;">
             <div style="flex:1;border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff;">
@@ -458,13 +773,13 @@
 <!-- COMPARISON -->
 <section id="compare" class="compare-wrap">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div class="section-eyebrow">vs. Your SEO Agency</div>
       <h2 class="section-title">Same outcomes. Half the cost. None of the bullshit.</h2>
       <p class="section-sub">Here's exactly what changes when you swap your SEO agency for Marquee.</p>
     </div>
 
-    <div class="compare">
+    <div class="compare reveal">
       <div class="compare-head">
         <div class="col-blank">
           <div class="col-label">What you get</div>
@@ -472,7 +787,7 @@
         </div>
         <div class="agency">
           <div class="col-label">A typical SEO agency</div>
-          <div class="col-name">A$3,000–5,000/mo</div>
+          <div class="col-name">A$3,000 to A$5,000/mo</div>
         </div>
         <div class="ours">
           <div class="col-label">Marquee</div>
@@ -480,109 +795,64 @@
         </div>
       </div>
 
-      <div class="compare-row">
-        <div class="feat">Hours of work shipped per week</div>
-        <div class="agency">~10 hours</div>
-        <div class="ours">~50 hours, every week</div>
-      </div>
-      <div class="compare-row">
-        <div class="feat">Onboarding time</div>
-        <div class="agency">3–4 week kickoff, contracts, workshops</div>
-        <div class="ours">10 minutes. First report in 7 days.</div>
-      </div>
-      <div class="compare-row">
-        <div class="feat">Account management</div>
-        <div class="agency">Weekly status calls, slide decks, AM emails</div>
-        <div class="ours">None. Just one weekly report.</div>
-      </div>
-      <div class="compare-row">
-        <div class="feat">Approval before publishing</div>
-        <div class="agency">Often skipped or buried in monthly review</div>
-        <div class="ours">Every change. One-click approval before going live.</div>
-      </div>
-      <div class="compare-row">
-        <div class="feat">Search Console + Analytics integration</div>
-        <div class="agency">Read-only access, manual reporting</div>
-        <div class="ours">Direct integration. Drives prioritization and revenue attribution.</div>
-      </div>
-      <div class="compare-row">
-        <div class="feat">Pages optimized per month</div>
-        <div class="agency">10–30 (manual)</div>
-        <div class="ours">Hundreds. Continuously.</div>
-      </div>
-      <div class="compare-row">
-        <div class="feat">Content output</div>
-        <div class="agency">2 posts/month, picked ad hoc</div>
-        <div class="ours">4+ posts/month, mapped into topic clusters</div>
-      </div>
-      <div class="compare-row">
-        <div class="feat">Content research + cluster strategy</div>
-        <div class="agency">Surface-level keyword lists</div>
-        <div class="ours">Full topic clusters per core category. Built for topical authority.</div>
-      </div>
-      <div class="compare-row">
-        <div class="feat">AI search (AEO/GEO) coverage</div>
-        <div class="agency">Not offered, or extra add-on</div>
-        <div class="ours">Tracked daily across 5 platforms. Included.</div>
-      </div>
-      <div class="compare-row">
-        <div class="feat">Editorial placements</div>
-        <div class="agency">Sometimes, with extra retainer</div>
-        <div class="ours">Included from Growth tier upward</div>
-      </div>
-      <div class="compare-row">
-        <div class="feat">Wikipedia citation work</div>
-        <div class="agency">Rarely offered</div>
-        <div class="ours">Pursued when your brand qualifies</div>
-      </div>
-      <div class="compare-row">
-        <div class="feat">Reporting</div>
-        <div class="agency">Monthly PDF, often late</div>
-        <div class="ours">Weekly, automated, in your inbox or Slack</div>
-      </div>
-      <div class="compare-row">
-        <div class="feat">Custom analytics dashboard</div>
-        <div class="agency">Generic platform login</div>
-        <div class="ours">Built in Looker or Power BI. You pick the platform.</div>
-      </div>
-      <div class="compare-row">
-        <div class="feat">Keyword rank tracking</div>
-        <div class="agency">Whatever the agency tracks</div>
-        <div class="ours">Your core keywords, your market, your category. Daily refresh.</div>
-      </div>
-      <div class="compare-row">
-        <div class="feat">Weekly competitor report</div>
-        <div class="agency">Quarterly, if you ask</div>
-        <div class="ours">Every Monday. Rankings, content, AI citations, backlinks. Side by side.</div>
-      </div>
-      <div class="compare-row">
-        <div class="feat">Contract</div>
-        <div class="agency">6–12 month minimums</div>
-        <div class="ours">Month-to-month. Cancel anytime.</div>
-      </div>
-      <div class="compare-row">
-        <div class="feat">Cost (typical mid-market store)</div>
-        <div class="agency">A$3,000 to A$5,000 / month</div>
-        <div class="ours">A$749 to A$2,999 / month. Less than half the agency.</div>
-      </div>
+      <div class="compare-row"><div class="feat">Hours of work shipped per week</div><div class="agency">~10 hours</div><div class="ours">~50 hours, every week</div></div>
+      <div class="compare-row"><div class="feat">Onboarding time</div><div class="agency">3 to 4 week kickoff, contracts, workshops</div><div class="ours">10 minutes. First report in 7 days.</div></div>
+      <div class="compare-row"><div class="feat">Account management</div><div class="agency">Weekly status calls, slide decks, AM emails</div><div class="ours">None. Just one weekly report.</div></div>
+      <div class="compare-row"><div class="feat">Account manager availability</div><div class="agency">PTO, sick leave, turnover, junior takeovers when seniors are out</div><div class="ours">Same agents every week. No holidays, no sick days, no handoffs.</div></div>
+      <div class="compare-row"><div class="feat">Keyword research turnaround</div><div class="agency">1 to 2 weeks queued behind other clients</div><div class="ours">24 hours. Full SERP analysis, intent map, cluster plan.</div></div>
+      <div class="compare-row"><div class="feat">Approval before publishing</div><div class="agency">Often skipped or buried in monthly review</div><div class="ours">Every change. One-click approval before going live.</div></div>
+      <div class="compare-row"><div class="feat">Search Console + Analytics integration</div><div class="agency">Read-only access, manual reporting</div><div class="ours">Direct integration. Drives prioritization and revenue attribution.</div></div>
+      <div class="compare-row"><div class="feat">Pages optimized per month</div><div class="agency">10 to 30 (manual)</div><div class="ours">Hundreds. Continuously.</div></div>
+      <div class="compare-row"><div class="feat">Content output</div><div class="agency">2 posts/month, picked ad hoc</div><div class="ours">4+ posts/month, mapped into topic clusters</div></div>
+      <div class="compare-row"><div class="feat">Content research + cluster strategy</div><div class="agency">Surface-level keyword lists</div><div class="ours">Full topic clusters per core category. Built for topical authority.</div></div>
+      <div class="compare-row"><div class="feat">AI search (AEO/GEO) coverage</div><div class="agency">Not offered, or extra add-on</div><div class="ours">Tracked daily across 5 platforms. Included.</div></div>
+      <div class="compare-row"><div class="feat">Editorial placements</div><div class="agency">Sometimes, with extra retainer</div><div class="ours">Included from Growth tier upward</div></div>
+      <div class="compare-row"><div class="feat">Wikipedia citation work</div><div class="agency">Rarely offered</div><div class="ours">Pursued when your brand qualifies</div></div>
+      <div class="compare-row"><div class="feat">Reporting</div><div class="agency">Monthly PDF, often late</div><div class="ours">Weekly, automated, in your inbox or Slack</div></div>
+      <div class="compare-row"><div class="feat">Custom analytics dashboard</div><div class="agency">Generic platform login</div><div class="ours">Built in Looker or Power BI. You pick the platform.</div></div>
+      <div class="compare-row"><div class="feat">Keyword rank tracking</div><div class="agency">Whatever the agency tracks</div><div class="ours">Your core keywords, your market, your category. Daily refresh.</div></div>
+      <div class="compare-row"><div class="feat">Weekly competitor report</div><div class="agency">Quarterly, if you ask</div><div class="ours">Every Monday. Rankings, content, AI citations, backlinks. Side by side.</div></div>
+      <div class="compare-row"><div class="feat">Contract</div><div class="agency">6 to 12 month minimums</div><div class="ours">Month-to-month. Cancel anytime.</div></div>
+      <div class="compare-row"><div class="feat">Cost (typical mid-market store)</div><div class="agency">A$3,000 to A$5,000 / month</div><div class="ours">A$749 to A$2,999 / month. Less than half the agency.</div></div>
     </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
+<!-- HOW IT WORKS - timeline -->
 <section id="how" class="how">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div class="section-eyebrow">How it works</div>
       <h2 class="section-title">From connect to compound, in five steps.</h2>
       <p class="section-sub">No discovery sprints. No SOWs. The autopilot starts working before your first call would have ended.</p>
     </div>
-    <div class="pyramid">
-      <div class="pyramid-step">1. Connect Shopify, Search Console, Analytics <span class="pyramid-cap">Install our app, grant access. 10 minutes.</span></div>
-      <div class="pyramid-step">2. Audit + 90-day plan <span class="pyramid-cap">Full technical, content, and AEO audit delivered in 24 hours.</span></div>
-      <div class="pyramid-step">3. Agents start shipping <span class="pyramid-cap">On-page fixes, schema, internal links. Within the first week.</span></div>
-      <div class="pyramid-step">4. Content + authority compound <span class="pyramid-cap">Weekly content, monthly placements, daily AEO optimization.</span></div>
-      <div class="pyramid-step">5. You approve. Then we publish. <span class="pyramid-cap">Every change reviewed in your weekly report before going live. One-click approval.</span></div>
+
+    <div class="timeline">
+      <div class="tl-step reveal">
+        <div class="tl-num">01</div>
+        <h3 class="tl-title">Connect Shopify, Search Console, and Analytics.</h3>
+        <p class="tl-cap">Install our app, grant access. Ten minutes start to finish. No SOW, no kickoff call.</p>
+      </div>
+      <div class="tl-step reveal">
+        <div class="tl-num">02</div>
+        <h3 class="tl-title">Audit and 90-day plan.</h3>
+        <p class="tl-cap">Full technical, content, and AEO audit delivered in 24 hours. Every gap. Every opportunity. Prioritised by revenue impact.</p>
+      </div>
+      <div class="tl-step reveal">
+        <div class="tl-num">03</div>
+        <h3 class="tl-title">Agents start shipping.</h3>
+        <p class="tl-cap">On-page fixes, schema, internal links. Within the first week of signup. You see it in Search Console.</p>
+      </div>
+      <div class="tl-step reveal">
+        <div class="tl-num">04</div>
+        <h3 class="tl-title">Content and authority compound.</h3>
+        <p class="tl-cap">Weekly content shipped, monthly editorial placements, daily AEO optimization. Topic clusters built out one category at a time.</p>
+      </div>
+      <div class="tl-step reveal">
+        <div class="tl-num">05</div>
+        <h3 class="tl-title">You approve. Then we publish.</h3>
+        <p class="tl-cap">Every change reviewed in your weekly report before going live. One-click approval. Nothing ships behind your back.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -590,13 +860,13 @@
 <!-- PRICING -->
 <section id="pricing">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div class="section-eyebrow">Pricing</div>
       <h2 class="section-title">Transparent. Month-to-month. No sales call required.</h2>
       <p class="section-sub">Pick a tier based on your store's revenue. Switch up or down anytime. Annual prepay saves 15%.</p>
     </div>
     <div class="price-grid">
-      <div class="price-card">
+      <div class="price-card reveal">
         <h4>Starter</h4>
         <p class="for">For stores doing A$200K to A$1M revenue</p>
         <div class="price">A$749</div>
@@ -612,7 +882,7 @@
         <a class="btn btn-dark" href="#">Start with Starter</a>
       </div>
 
-      <div class="price-card featured">
+      <div class="price-card featured reveal">
         <span class="badge">Most popular</span>
         <h4>Growth</h4>
         <p class="for">For stores doing A$1M to A$5M revenue</p>
@@ -630,7 +900,7 @@
         <a class="btn btn-grad" href="#">Get Growth</a>
       </div>
 
-      <div class="price-card">
+      <div class="price-card reveal">
         <h4>Authority</h4>
         <p class="for">For stores doing A$5M+ revenue</p>
         <div class="price">A$2,999</div>
@@ -652,14 +922,14 @@
 <!-- FINAL CTA -->
 <section class="cta-band">
   <div class="wrap">
-    <div class="cta-card">
+    <div class="cta-card reveal">
       <div>
         <h3>Stop paying for the agency tax.</h3>
         <p>Connect your Shopify store, Search Console, and Google Analytics. Get a free audit of every page, every keyword gap, and every AI citation opportunity. All within 24 hours. No call required.</p>
       </div>
       <div class="actions">
-        <a class="btn btn-grad" href="#">Start free audit</a>
-        <a class="btn btn-ghost" style="color:#fff" href="#pricing">See pricing →</a>
+        <a class="btn btn-grad" href="#">Start free audit <span class="btn-arrow">→</span></a>
+        <a class="btn btn-ghost" style="color:#fff" href="#pricing">See pricing <span class="btn-arrow">→</span></a>
       </div>
     </div>
   </div>
@@ -680,6 +950,43 @@
     </div>
   </div>
 </footer>
+
+<script>
+(function(){
+  // Reveal on scroll
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal, .tl-step, .pillar-visual').forEach(function(el){ io.observe(el); });
+
+  // Counter animation
+  var counterIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) {
+        var el = e.target;
+        var target = parseInt(el.getAttribute('data-target'), 10);
+        if (target === 0) { el.textContent = '0'; counterIO.unobserve(el); return; }
+        var duration = 1600;
+        var start = performance.now();
+        function tick(now){
+          var t = Math.min(1, (now - start) / duration);
+          var eased = 1 - Math.pow(1 - t, 3);
+          el.textContent = Math.round(target * eased);
+          if (t < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        counterIO.unobserve(el);
+      }
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('.counter').forEach(function(el){ counterIO.observe(el); });
+})();
+</script>
 
 </body>
 </html>
